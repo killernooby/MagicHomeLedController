@@ -1,0 +1,21 @@
+﻿<Window x:Class="WPFWifiLedController.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFWifiLedController"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="65*"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox x:Name="ComboBoxDevices" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="2"/>
+        <Slider x:Name="SliderRed" HorizontalAlignment="Left" Margin="172.852,57,0,0" VerticalAlignment="Top" Height="100" Width="20
+                " Maximum="255" SmallChange="1" LargeChange="49" Grid.Column="1" Orientation="Vertical"/>
+        <Slider x:Name="SliderGreen" HorizontalAlignment="Left" Margin="222.852,57,0,0" VerticalAlignment="Top" Height="100" Width="20                 " Maximum="255" SmallChange="1" LargeChange="49" Grid.Column="1" Orientation="Vertical"/>
+        <Slider x:Name="SliderBlue" HorizontalAlignment="Left" Margin="272.852,57,0,0" VerticalAlignment="Top" Height="100" Width="20                 " Maximum="255" SmallChange="1" LargeChange="49" Grid.Column="1" Orientation="Vertical"/>
+
+    </Grid>
+</Window>
