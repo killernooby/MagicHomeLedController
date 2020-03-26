@@ -565,9 +565,11 @@ namespace WifiLedController {
                 }
                 if (ambiantMode) {
                     functionTime.Start();
+                    //need some validation of values, especially for the settings values.
                     averageColor = sp.GetAverageColorSection((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value, 
                         (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedYheight.Value,
-                        (int)numericUpDownAdvancedXstride.Value,(int)numericUpDownAdvancedYstride.Value);
+                        (int)numericUpDownAdvancedXstride.Value,(int)numericUpDownAdvancedYstride.Value,
+                        (int)numericUpDownSettingsRed.Value, (int)numericUpDownSettingsGreen.Value, (int)numericUpDownSettingsBlue.Value);
                    
                     
                     this.Invoke((MethodInvoker)(() => updateViewColor(averageColor.R, averageColor.G, averageColor.B, 0)));
@@ -637,6 +639,16 @@ namespace WifiLedController {
             xmlSettings.Save();
         }
 
-
+        private void buttonAddDummy_Click_1(object sender, EventArgs e) {
+            DummyWifiLed newDummy = new DummyWifiLed(IPAddress.Parse("255.255.255.255"), "Dummy" + DummyCount);
+            string custom = xmlSettings.FindCustomName(newDummy.macAddress);
+            if (custom != null && custom != "") {
+                Debug.WriteLine("[buttonAddDummy_Click] custom = {0}", custom);
+                newDummy.name = custom;
+            }
+            DummyCount++;
+            foundLeds.Add(newDummy);
+            checkedListBoxDevices.Items.Add(newDummy, false);
+        }
     }
 }

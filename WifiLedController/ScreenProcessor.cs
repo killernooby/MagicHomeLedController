@@ -66,7 +66,7 @@ namespace WifiLedController {
 
         }
 
-        public Color GetAverageColorSection(int x, int y, int xwidth, int yheight, int xstride=1, int ystride=1) {
+        public Color GetAverageColorSection(int x, int y, int xwidth, int yheight, int xstride=1, int ystride=1, int red = 0, int green = 0, int blue = 0) {
             Bitmap screenPixels = new Bitmap(xwidth, yheight, PixelFormat.Format32bppArgb);
             using (Graphics gdest = Graphics.FromImage(screenPixels)) {
                 using (Graphics gsrc = Graphics.FromHwnd(IntPtr.Zero)) {
@@ -92,11 +92,13 @@ namespace WifiLedController {
                     b += temp.B * temp.B;
                 }
             }
+            //Remember to dispose your pixels when you are done... Massive memory leak if you don't
+            screenPixels.Dispose();
             //Cast r to double to more accurately divide and square root. Then back to int for the final part
             double points = Math.Truncate((double)xwidth / (double)xstride) * Math.Truncate((double)yheight / (double)ystride);
-            r = (int)Math.Sqrt((double)r / points);
-            g = (int)Math.Sqrt((double)g / points);
-            b = (int)Math.Sqrt((double)b / points);
+            r = Math.Min((int)Math.Sqrt((double)r / points) + red,255);
+            g = Math.Min((int)Math.Sqrt((double)g / points) + green, 255);
+            b = Math.Min((int)Math.Sqrt((double)b / points) + blue, 255);
 
             //Debug.WriteLine("Average values r={0},g={1},b={2}",r,g,b);
             return Color.FromArgb(r,g,b);

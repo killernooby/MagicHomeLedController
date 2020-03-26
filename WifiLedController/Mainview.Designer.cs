@@ -33,12 +33,20 @@
             this.checkedListBoxDevices = new System.Windows.Forms.CheckedListBox();
             this.buttonRefreshList = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.buttonAddDummy = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.labelSettingsBlue = new System.Windows.Forms.Label();
+            this.labellabelSettingsGreen = new System.Windows.Forms.Label();
+            this.labelSettingsRed = new System.Windows.Forms.Label();
+            this.numericUpDownSettingsBlue = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSettingsGreen = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSettingsRed = new System.Windows.Forms.NumericUpDown();
+            this.buttonAddDummy = new System.Windows.Forms.Button();
             this.buttonSettingsNameSave = new System.Windows.Forms.Button();
             this.textBoxSettingsName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.labelAdvancedCoordinates = new System.Windows.Forms.Label();
+            this.labelColorMouse = new System.Windows.Forms.Label();
             this.checkBoxMouseTracking = new System.Windows.Forms.CheckBox();
             this.checkBoxAdvancedShowRegion = new System.Windows.Forms.CheckBox();
             this.pictureBoxAdvanced = new System.Windows.Forms.PictureBox();
@@ -79,9 +87,10 @@
             this.numericUpDownRed = new System.Windows.Forms.NumericUpDown();
             this.blueBar = new System.Windows.Forms.TrackBar();
             this.tabControlDevice = new System.Windows.Forms.TabControl();
-            this.labelColorMouse = new System.Windows.Forms.Label();
-            this.labelAdvancedCoordinates = new System.Windows.Forms.Label();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsBlue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsGreen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsRed)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBoxAdvanced.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAdvanced)).BeginInit();
@@ -132,18 +141,15 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // buttonAddDummy
-            // 
-            this.buttonAddDummy.Location = new System.Drawing.Point(12, 252);
-            this.buttonAddDummy.Name = "buttonAddDummy";
-            this.buttonAddDummy.Size = new System.Drawing.Size(117, 23);
-            this.buttonAddDummy.TabIndex = 20;
-            this.buttonAddDummy.Text = "Add Dummy";
-            this.buttonAddDummy.UseVisualStyleBackColor = true;
-            this.buttonAddDummy.Click += new System.EventHandler(this.buttonAddDummy_Click);
-            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.labelSettingsBlue);
+            this.tabPage4.Controls.Add(this.labellabelSettingsGreen);
+            this.tabPage4.Controls.Add(this.labelSettingsRed);
+            this.tabPage4.Controls.Add(this.numericUpDownSettingsBlue);
+            this.tabPage4.Controls.Add(this.numericUpDownSettingsGreen);
+            this.tabPage4.Controls.Add(this.numericUpDownSettingsRed);
+            this.tabPage4.Controls.Add(this.buttonAddDummy);
             this.tabPage4.Controls.Add(this.buttonSettingsNameSave);
             this.tabPage4.Controls.Add(this.textBoxSettingsName);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -153,6 +159,64 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // labelSettingsBlue
+            // 
+            this.labelSettingsBlue.AutoSize = true;
+            this.labelSettingsBlue.Location = new System.Drawing.Point(7, 92);
+            this.labelSettingsBlue.Name = "labelSettingsBlue";
+            this.labelSettingsBlue.Size = new System.Drawing.Size(28, 13);
+            this.labelSettingsBlue.TabIndex = 8;
+            this.labelSettingsBlue.Text = "Blue";
+            // 
+            // labellabelSettingsGreen
+            // 
+            this.labellabelSettingsGreen.AutoSize = true;
+            this.labellabelSettingsGreen.Location = new System.Drawing.Point(7, 67);
+            this.labellabelSettingsGreen.Name = "labellabelSettingsGreen";
+            this.labellabelSettingsGreen.Size = new System.Drawing.Size(36, 13);
+            this.labellabelSettingsGreen.TabIndex = 7;
+            this.labellabelSettingsGreen.Text = "Green";
+            // 
+            // labelSettingsRed
+            // 
+            this.labelSettingsRed.AutoSize = true;
+            this.labelSettingsRed.Location = new System.Drawing.Point(7, 40);
+            this.labelSettingsRed.Name = "labelSettingsRed";
+            this.labelSettingsRed.Size = new System.Drawing.Size(27, 13);
+            this.labelSettingsRed.TabIndex = 6;
+            this.labelSettingsRed.Text = "Red";
+            // 
+            // numericUpDownSettingsBlue
+            // 
+            this.numericUpDownSettingsBlue.Location = new System.Drawing.Point(94, 86);
+            this.numericUpDownSettingsBlue.Name = "numericUpDownSettingsBlue";
+            this.numericUpDownSettingsBlue.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsBlue.TabIndex = 5;
+            // 
+            // numericUpDownSettingsGreen
+            // 
+            this.numericUpDownSettingsGreen.Location = new System.Drawing.Point(94, 60);
+            this.numericUpDownSettingsGreen.Name = "numericUpDownSettingsGreen";
+            this.numericUpDownSettingsGreen.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsGreen.TabIndex = 4;
+            // 
+            // numericUpDownSettingsRed
+            // 
+            this.numericUpDownSettingsRed.Location = new System.Drawing.Point(94, 34);
+            this.numericUpDownSettingsRed.Name = "numericUpDownSettingsRed";
+            this.numericUpDownSettingsRed.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsRed.TabIndex = 3;
+            // 
+            // buttonAddDummy
+            // 
+            this.buttonAddDummy.Location = new System.Drawing.Point(7, 208);
+            this.buttonAddDummy.Name = "buttonAddDummy";
+            this.buttonAddDummy.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddDummy.TabIndex = 2;
+            this.buttonAddDummy.Text = "buttonAddDummy";
+            this.buttonAddDummy.UseVisualStyleBackColor = true;
+            this.buttonAddDummy.Click += new System.EventHandler(this.buttonAddDummy_Click_1);
             // 
             // buttonSettingsNameSave
             // 
@@ -210,6 +274,24 @@
             this.groupBoxAdvanced.TabIndex = 6;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "Color Scanning";
+            // 
+            // labelAdvancedCoordinates
+            // 
+            this.labelAdvancedCoordinates.AutoSize = true;
+            this.labelAdvancedCoordinates.Location = new System.Drawing.Point(6, 132);
+            this.labelAdvancedCoordinates.Name = "labelAdvancedCoordinates";
+            this.labelAdvancedCoordinates.Size = new System.Drawing.Size(142, 13);
+            this.labelAdvancedCoordinates.TabIndex = 19;
+            this.labelAdvancedCoordinates.Text = "Mouse tracking not enabled.";
+            // 
+            // labelColorMouse
+            // 
+            this.labelColorMouse.AutoSize = true;
+            this.labelColorMouse.Location = new System.Drawing.Point(54, 145);
+            this.labelColorMouse.Name = "labelColorMouse";
+            this.labelColorMouse.Size = new System.Drawing.Size(99, 13);
+            this.labelColorMouse.TabIndex = 18;
+            this.labelColorMouse.Text = "Color under Mouse:";
             // 
             // checkBoxMouseTracking
             // 
@@ -713,31 +795,12 @@
             this.tabControlDevice.Size = new System.Drawing.Size(272, 263);
             this.tabControlDevice.TabIndex = 21;
             // 
-            // labelColorMouse
-            // 
-            this.labelColorMouse.AutoSize = true;
-            this.labelColorMouse.Location = new System.Drawing.Point(54, 145);
-            this.labelColorMouse.Name = "labelColorMouse";
-            this.labelColorMouse.Size = new System.Drawing.Size(99, 13);
-            this.labelColorMouse.TabIndex = 18;
-            this.labelColorMouse.Text = "Color under Mouse:";
-            // 
-            // labelAdvancedCoordinates
-            // 
-            this.labelAdvancedCoordinates.AutoSize = true;
-            this.labelAdvancedCoordinates.Location = new System.Drawing.Point(6, 132);
-            this.labelAdvancedCoordinates.Name = "labelAdvancedCoordinates";
-            this.labelAdvancedCoordinates.Size = new System.Drawing.Size(142, 13);
-            this.labelAdvancedCoordinates.TabIndex = 19;
-            this.labelAdvancedCoordinates.Text = "Mouse tracking not enabled.";
-            // 
             // Mainview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(424, 293);
             this.Controls.Add(this.tabControlDevice);
-            this.Controls.Add(this.buttonAddDummy);
             this.Controls.Add(this.buttonRefreshList);
             this.Controls.Add(this.checkedListBoxDevices);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -749,6 +812,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Mainview_FormClosing);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsBlue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsGreen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsRed)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.groupBoxAdvanced.ResumeLayout(false);
@@ -784,7 +850,6 @@
         private System.Windows.Forms.CheckedListBox checkedListBoxDevices;
         private System.Windows.Forms.Button buttonRefreshList;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Button buttonAddDummy;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button buttonSettingsNameSave;
         private System.Windows.Forms.TextBox textBoxSettingsName;
@@ -832,6 +897,13 @@
         private System.Windows.Forms.CheckBox checkBoxMouseTracking;
         private System.Windows.Forms.Label labelAdvancedCoordinates;
         private System.Windows.Forms.Label labelColorMouse;
+        private System.Windows.Forms.Button buttonAddDummy;
+        private System.Windows.Forms.Label labelSettingsBlue;
+        private System.Windows.Forms.Label labellabelSettingsGreen;
+        private System.Windows.Forms.Label labelSettingsRed;
+        private System.Windows.Forms.NumericUpDown numericUpDownSettingsBlue;
+        private System.Windows.Forms.NumericUpDown numericUpDownSettingsGreen;
+        private System.Windows.Forms.NumericUpDown numericUpDownSettingsRed;
     }
 }
 
