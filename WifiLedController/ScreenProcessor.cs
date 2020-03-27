@@ -103,5 +103,43 @@ namespace WifiLedController {
             //Debug.WriteLine("Average values r={0},g={1},b={2}",r,g,b);
             return Color.FromArgb(r,g,b);
         }
+
+        public Color GetAverageColorSectionMulti(int x, int y, int xwidth, int yheight, int xstride = 1, int ystride = 1, float red = 1, float green = 1, float blue = 1) {
+            Bitmap screenPixels = new Bitmap(xwidth, yheight, PixelFormat.Format32bppArgb);
+            using (Graphics gdest = Graphics.FromImage(screenPixels)) {
+                using (Graphics gsrc = Graphics.FromHwnd(IntPtr.Zero)) {
+                    IntPtr hSrcDC = gsrc.GetHdc();
+                    IntPtr hDC = gdest.GetHdc();
+
+
+                    int retval = BitBlt(hDC, 0, 0, xwidth, yheight, hSrcDC, x, y, (int)CopyPixelOperation.SourceCopy);
+                    gdest.ReleaseHdc();
+                    gsrc.ReleaseHdc();
+                }
+            }
+            int r = 0, g = 0, b = 0;
+            Color temp;
+
+            for (int i = 0; i < yheight; i = i + ystride) {
+                for (int j = 0; j < xwidth; j = j + xstride) {
+                    //Debug.WriteLine("{0},{1} Color = {2}", i, j, screenPixel.GetPixel(j, i));
+                    //https://sighack.com/post/averaging-rgb-colors-the-right-way
+                    temp = screenPixels.GetPixel(j, i);
+                    r += temp.R * temp.R;
+                    g += temp.G * temp.G;
+                    b += temp.B * temp.B;
+                }
+            }
+            //Remember to dispose your pixels when you are done... Massive memory leak if you don't
+            screenPixels.Dispose();
+            //Cast r to double to more accurately divide and square root. Then back to int for the final part
+            double points = Math.Truncate((double)xwidth / (double)xstride) * Math.Truncate((double)yheight / (double)ystride);
+            r = (int)Math.Min(Math.Sqrt(r / points) * red, 255);
+            g = (int)Math.Min(Math.Sqrt(g / points) * green, 255);
+            b = (int)Math.Min(Math.Sqrt(b / points) * blue, 255);
+
+            //Debug.WriteLine("Average values r={0},g={1},b={2}",r,g,b);
+            return Color.FromArgb(r, g, b);
+        }
     }
 }

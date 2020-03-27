@@ -68,7 +68,10 @@ namespace WifiLedController {
         }
 
         public void AddAmbianceSettings(int X, int Xwidth, int Xstride, int Y, int Yheight, int Ystride) {
+
             XmlNode result = settings.DocumentElement.SelectSingleNode("//AmbianceSettings");
+            Debug.WriteLine("[AddAmbianceSettings] " + result.InnerXml);
+            Debug.WriteLine("[AddAmbianceSettings] {0}, {1}, {2}, {3}, {4}, {5}",X,Xwidth,Xstride,Y,Yheight,Ystride);
             if(result == null) {
                 XmlElement colorSettings = settings.CreateElement("AmbianceSettings");
 

@@ -87,6 +87,7 @@
             this.numericUpDownRed = new System.Windows.Forms.NumericUpDown();
             this.blueBar = new System.Windows.Forms.TrackBar();
             this.tabControlDevice = new System.Windows.Forms.TabControl();
+            this.buttonSettingSwitch = new System.Windows.Forms.Button();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsGreen)).BeginInit();
@@ -143,6 +144,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.buttonSettingSwitch);
             this.tabPage4.Controls.Add(this.labelSettingsBlue);
             this.tabPage4.Controls.Add(this.labellabelSettingsGreen);
             this.tabPage4.Controls.Add(this.labelSettingsRed);
@@ -189,6 +191,7 @@
             // 
             // numericUpDownSettingsBlue
             // 
+            this.numericUpDownSettingsBlue.DecimalPlaces = 2;
             this.numericUpDownSettingsBlue.Location = new System.Drawing.Point(94, 86);
             this.numericUpDownSettingsBlue.Name = "numericUpDownSettingsBlue";
             this.numericUpDownSettingsBlue.Size = new System.Drawing.Size(120, 20);
@@ -196,14 +199,26 @@
             // 
             // numericUpDownSettingsGreen
             // 
+            this.numericUpDownSettingsGreen.DecimalPlaces = 2;
             this.numericUpDownSettingsGreen.Location = new System.Drawing.Point(94, 60);
+            this.numericUpDownSettingsGreen.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.numericUpDownSettingsGreen.Name = "numericUpDownSettingsGreen";
             this.numericUpDownSettingsGreen.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownSettingsGreen.TabIndex = 4;
             // 
             // numericUpDownSettingsRed
             // 
+            this.numericUpDownSettingsRed.DecimalPlaces = 2;
             this.numericUpDownSettingsRed.Location = new System.Drawing.Point(94, 34);
+            this.numericUpDownSettingsRed.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.numericUpDownSettingsRed.Name = "numericUpDownSettingsRed";
             this.numericUpDownSettingsRed.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownSettingsRed.TabIndex = 3;
@@ -795,6 +810,16 @@
             this.tabControlDevice.Size = new System.Drawing.Size(272, 263);
             this.tabControlDevice.TabIndex = 21;
             // 
+            // buttonSettingSwitch
+            // 
+            this.buttonSettingSwitch.Location = new System.Drawing.Point(10, 109);
+            this.buttonSettingSwitch.Name = "buttonSettingSwitch";
+            this.buttonSettingSwitch.Size = new System.Drawing.Size(113, 23);
+            this.buttonSettingSwitch.TabIndex = 9;
+            this.buttonSettingSwitch.Text = "Additive Active";
+            this.buttonSettingSwitch.UseVisualStyleBackColor = true;
+            this.buttonSettingSwitch.Click += new System.EventHandler(this.button1_Click_2);
+            // 
             // Mainview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -904,6 +929,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownSettingsBlue;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingsGreen;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingsRed;
+        private System.Windows.Forms.Button buttonSettingSwitch;
     }
 }
 

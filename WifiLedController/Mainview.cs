@@ -31,8 +31,9 @@ namespace WifiLedController {
             //WifiLedController.Properties.Settings.Default.Initialize(new System.Configuration.SettingsContext(), new System.Configuration.SettingsPropertyCollection(),new System.Configuration.SettingsProviderCollection());
             findLeds();
             FillFunctionList();
-            updateCalculations();
+
             SetupAmbianceSettings();
+            updateCalculations();
             this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.WorkerReportsProgress = true;
         }
@@ -566,10 +567,18 @@ namespace WifiLedController {
                 if (ambiantMode) {
                     functionTime.Start();
                     //need some validation of values, especially for the settings values.
-                    averageColor = sp.GetAverageColorSection((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value, 
+                    if (ambianceMult) {
+                        averageColor = sp.GetAverageColorSectionMulti((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value,
                         (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedYheight.Value,
-                        (int)numericUpDownAdvancedXstride.Value,(int)numericUpDownAdvancedYstride.Value,
+                        (int)numericUpDownAdvancedXstride.Value, (int)numericUpDownAdvancedYstride.Value,
+                        (float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value, (float)numericUpDownSettingsBlue.Value);
+                    } else {
+                        averageColor = sp.GetAverageColorSection((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value,
+                        (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedYheight.Value,
+                        (int)numericUpDownAdvancedXstride.Value, (int)numericUpDownAdvancedYstride.Value,
                         (int)numericUpDownSettingsRed.Value, (int)numericUpDownSettingsGreen.Value, (int)numericUpDownSettingsBlue.Value);
+                    }
+                    
                    
                     
                     this.Invoke((MethodInvoker)(() => updateViewColor(averageColor.R, averageColor.G, averageColor.B, 0)));
@@ -649,6 +658,33 @@ namespace WifiLedController {
             DummyCount++;
             foundLeds.Add(newDummy);
             checkedListBoxDevices.Items.Add(newDummy, false);
+        }
+        bool ambianceMult = false;
+        decimal redAmbiance = 1;
+        decimal greenAmbiance = 1;
+        decimal blueAmbiance = 1;
+        private void button1_Click_2(object sender, EventArgs e) {
+            if (ambianceMult) {//swap ambiance toggle
+                ambianceMult = false;
+                buttonSettingSwitch.Text = "Additive Active";
+            } else {
+                ambianceMult = true;
+                buttonSettingSwitch.Text = "Multiplier Active";
+            }
+            decimal temp;
+            //switch values
+            temp = numericUpDownSettingsRed.Value;
+            numericUpDownSettingsRed.Value = redAmbiance;
+            redAmbiance = temp;
+
+            temp = numericUpDownSettingsGreen.Value;
+            numericUpDownSettingsGreen.Value = greenAmbiance;
+            greenAmbiance = temp;
+
+            temp = numericUpDownSettingsBlue.Value;
+            numericUpDownSettingsBlue.Value = blueAmbiance;
+            blueAmbiance = temp;
+
         }
     }
 }
