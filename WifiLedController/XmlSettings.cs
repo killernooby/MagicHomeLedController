@@ -50,10 +50,9 @@ namespace WifiLedController {
         //  X, Xwidth,Xstride, Y, Yheight, Ystride 
         public (int, int, int, int, int, int) ReadAmbianceSettings() {
             XmlNode result = settings.DocumentElement.SelectSingleNode("//AmbianceSettings");
-            Debug.WriteLine("[ReadAmbianceSettings()] " + result.InnerXml);
-            if(result != null || result.InnerText != "" ) {//<X>0</X><Xwidth>1920</Xwidth><Xstride>10</Xstride><Y>1060</Y><Yheight>20</Yheight><Ystride>2</Ystride>
-                XmlNodeList coords =  result.ChildNodes;
-                Debug.WriteLine(result["X"].InnerText);
+            
+            if(result != null) {//<X>0</X><Xwidth>1920</Xwidth><Xstride>10</Xstride><Y>1060</Y><Yheight>20</Yheight><Ystride>2</Ystride>
+                Debug.WriteLine("[ReadAmbianceSettings()] " + result.InnerXml);
                 //Parse the Xml 
                 int X = int.Parse(result["X"].InnerText);
                 int Xwidth = int.Parse(result["Xwidth"].InnerText);
@@ -70,9 +69,10 @@ namespace WifiLedController {
         public void AddAmbianceSettings(int X, int Xwidth, int Xstride, int Y, int Yheight, int Ystride) {
 
             XmlNode result = settings.DocumentElement.SelectSingleNode("//AmbianceSettings");
-            Debug.WriteLine("[AddAmbianceSettings] " + result.InnerXml);
+            
             Debug.WriteLine("[AddAmbianceSettings] {0}, {1}, {2}, {3}, {4}, {5}",X,Xwidth,Xstride,Y,Yheight,Ystride);
             if(result == null) {
+                
                 XmlElement colorSettings = settings.CreateElement("AmbianceSettings");
 
                 //Set up the internal structure and values
@@ -103,13 +103,65 @@ namespace WifiLedController {
                 settings.DocumentElement.AppendChild(colorSettings);
 
             } else {
-
+                Debug.WriteLine("[AddAmbianceSettings] " + result.InnerXml);
                 result["X"].InnerText = X.ToString();
                 result["Xwidth"].InnerText = Xwidth.ToString();
                 result["Xstride"].InnerText = Xstride.ToString();
                 result["Y"].InnerText = Y.ToString();
                 result["Yheight"].InnerText = Yheight.ToString();
                 result["Ystride"].InnerText = Ystride.ToString();
+            }
+        }
+
+        public (float, float, float, string) ReadAmbianceColorTuningSettings() {
+            XmlNode result = settings.DocumentElement.SelectSingleNode("//AmbianceColorTuningSettings");
+            
+            if (result != null) {
+                Debug.WriteLine("[ReadAmbianceColorTuningSettings()] " + result.InnerXml);
+                //Parse the Xml 
+                float red = float.Parse(result["Red"].InnerText);
+                float green = float.Parse(result["Green"].InnerText);
+                float blue = float.Parse(result["Blue"].InnerText);
+                string mode = result["Mode"].InnerText;
+                return (red,green,blue,mode);
+            }
+            //Default values
+            return (0, 0, 0, "Additive");
+        }
+
+        public void AddAmbianceColorTuningSettings(float red, float green, float blue, string mode) {
+
+            XmlNode result = settings.DocumentElement.SelectSingleNode("//AmbianceColorTuningSettings");
+            //Debug.WriteLine("[AddAmbianceSettings] " + result.InnerXml);
+            
+            if (result == null) {
+                XmlElement colorSettings = settings.CreateElement("AmbianceColorTuningSettings");
+
+                //Set up the internal structure and values
+                XmlElement setting = settings.CreateElement("Red");
+                setting.InnerText = red.ToString();
+                colorSettings.AppendChild(setting);
+
+                setting = settings.CreateElement("Green");
+                setting.InnerText = green.ToString();
+                colorSettings.AppendChild(setting);
+
+                setting = settings.CreateElement("Blue");
+                setting.InnerText = blue.ToString();
+                colorSettings.AppendChild(setting);
+
+                setting = settings.CreateElement("Mode");
+                setting.InnerText = mode;
+                colorSettings.AppendChild(setting);
+
+                settings.DocumentElement.AppendChild(colorSettings);
+
+            } else {
+
+                result["Red"].InnerText = red.ToString();
+                result["Green"].InnerText = green.ToString();
+                result["Blue"].InnerText = blue.ToString();
+                result["Mode"].InnerText = mode;
             }
         }
 
@@ -139,6 +191,15 @@ namespace WifiLedController {
                             + "<xs:element name = \"Ystride\" type = \"xs:int\"/>"                       
                             + "</xs:sequence>"
                             + "</xs:complexType >"
+                            + "<xs:element name=\"AmbianceColorTuningSettings\" type=\"AmbianceColorTuningSettingsValues\"/>"
+                            + "<xs:complexType name=\"AmbianceColorTuningSettingsValues\">"
+                            + "<xs:sequence>"
+                            + "<xs:element name=\"Red\" type=\"xs:float\"/>"
+                            + "<xs:element name=\"Green\" type=\"xs:float\"/>"
+                            + "<xs:element name=\"Blue\" type=\"xs:float\"/>"
+                            + "<xs:element name=\"Mode\" type=\"xs:string\"/>"
+                            + "</xs:sequence>"
+                            + "</xs:complexType>"
                             + "</xs:schema>";
             return schema;
         }

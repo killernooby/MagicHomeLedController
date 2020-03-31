@@ -33,11 +33,25 @@ namespace WifiLedController {
             FillFunctionList();
 
             SetupAmbianceSettings();
+            SetupAmbianceColorTuningSettings();
             updateCalculations();
             this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.WorkerReportsProgress = true;
         }
 
+        private void SetupAmbianceColorTuningSettings() {
+            (float red, float green, float blue, string mode) = xmlSettings.ReadAmbianceColorTuningSettings();
+            numericUpDownSettingsRed.Value = (decimal)red;
+            numericUpDownSettingsGreen.Value = (decimal)green;
+            numericUpDownSettingsBlue.Value = (decimal)blue;
+            if (mode.Equals("Multiplier")) {
+                ambianceMult = true;
+                buttonSettingSwitch.Text = "Multiplier Active";
+                numericUpDownSettingsRed.DecimalPlaces = 2;
+                numericUpDownSettingsGreen.DecimalPlaces = 2;
+                numericUpDownSettingsBlue.DecimalPlaces = 2;
+            }
+        }
 
         private void SetupAmbianceSettings() {
             (int X, int Xwidth, int Xstride, int Y, int Yheight, int Ystride) = xmlSettings.ReadAmbianceSettings();
@@ -459,10 +473,13 @@ namespace WifiLedController {
             } else {// uncheck
                 activeLeds.Remove((WifiLed)checkedListBoxDevices.Items[e.Index]);
             }
-         
+#if DEBUG
+
+
             foreach(WifiLed led in activeLeds) {
                 Debug.WriteLine("[activeLeds] : " + led);
             }
+#endif
 
         }
 
@@ -684,7 +701,42 @@ namespace WifiLedController {
             temp = numericUpDownSettingsBlue.Value;
             numericUpDownSettingsBlue.Value = blueAmbiance;
             blueAmbiance = temp;
+            if (ambianceMult) {
+                xmlSettings.AddAmbianceColorTuningSettings((float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value,
+                    (float)numericUpDownSettingsBlue.Value, "Multiplier");
+                numericUpDownSettingsRed.DecimalPlaces = 2;
+                numericUpDownSettingsGreen.DecimalPlaces = 2;
+                numericUpDownSettingsBlue.DecimalPlaces = 2;
+            } else {
+                xmlSettings.AddAmbianceColorTuningSettings((float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value,
+                    (float)numericUpDownSettingsBlue.Value, "Additive");
+                numericUpDownSettingsRed.DecimalPlaces = 0;
+                numericUpDownSettingsGreen.DecimalPlaces = 0;
+                numericUpDownSettingsBlue.DecimalPlaces = 0;
+            }
 
+        }
+
+        private void numericUpDownSettingsRed_ValueChanged(object sender, EventArgs e) {
+            updateColorTuningSettings();
+        }
+
+        private void numericUpDownSettingsGreen_ValueChanged(object sender, EventArgs e) {
+            updateColorTuningSettings();
+        }
+
+        private void numericUpDownSettingsBlue_ValueChanged(object sender, EventArgs e) {
+            updateColorTuningSettings();
+        }
+
+        private void updateColorTuningSettings() {
+            if (ambianceMult) {
+                xmlSettings.AddAmbianceColorTuningSettings((float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value,
+                    (float)numericUpDownSettingsBlue.Value, "Multiplier");
+            } else {
+                xmlSettings.AddAmbianceColorTuningSettings((float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value,
+                    (float)numericUpDownSettingsBlue.Value, "Additive");
+            }
         }
     }
 }

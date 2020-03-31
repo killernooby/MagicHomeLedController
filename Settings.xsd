@@ -23,5 +23,13 @@
       <xs:element name="Ystride" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
-  
+  <xs:element name="AmbianceColorTuningSettings" type="AmbianceColorTuningSettingsValues"/>
+  <xs:complexType name="AmbianceColorTuningSettingsValues">
+    <xs:sequence>
+      <xs:element name="Red" type="xs:float"/>
+      <xs:element name="Green" type="xs:float"/>
+      <xs:element name="Blue" type="xs:float"/>
+      <xs:element name="Mode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

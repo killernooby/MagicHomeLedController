@@ -34,13 +34,16 @@
             this.buttonRefreshList = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.buttonSettingSwitch = new System.Windows.Forms.Button();
             this.labelSettingsBlue = new System.Windows.Forms.Label();
             this.labellabelSettingsGreen = new System.Windows.Forms.Label();
             this.labelSettingsRed = new System.Windows.Forms.Label();
             this.numericUpDownSettingsBlue = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSettingsGreen = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSettingsRed = new System.Windows.Forms.NumericUpDown();
+            #if DEBUG
             this.buttonAddDummy = new System.Windows.Forms.Button();
+            #endif
             this.buttonSettingsNameSave = new System.Windows.Forms.Button();
             this.textBoxSettingsName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -87,7 +90,6 @@
             this.numericUpDownRed = new System.Windows.Forms.NumericUpDown();
             this.blueBar = new System.Windows.Forms.TrackBar();
             this.tabControlDevice = new System.Windows.Forms.TabControl();
-            this.buttonSettingSwitch = new System.Windows.Forms.Button();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsGreen)).BeginInit();
@@ -151,7 +153,9 @@
             this.tabPage4.Controls.Add(this.numericUpDownSettingsBlue);
             this.tabPage4.Controls.Add(this.numericUpDownSettingsGreen);
             this.tabPage4.Controls.Add(this.numericUpDownSettingsRed);
+            #if DEBUG
             this.tabPage4.Controls.Add(this.buttonAddDummy);
+            #endif
             this.tabPage4.Controls.Add(this.buttonSettingsNameSave);
             this.tabPage4.Controls.Add(this.textBoxSettingsName);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -162,66 +166,77 @@
             this.tabPage4.Text = "Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // buttonSettingSwitch
+            // 
+            this.buttonSettingSwitch.Location = new System.Drawing.Point(10, 109);
+            this.buttonSettingSwitch.Name = "buttonSettingSwitch";
+            this.buttonSettingSwitch.Size = new System.Drawing.Size(113, 23);
+            this.buttonSettingSwitch.TabIndex = 9;
+            this.buttonSettingSwitch.Text = "Additive Active";
+            this.buttonSettingSwitch.UseVisualStyleBackColor = true;
+            this.buttonSettingSwitch.Click += new System.EventHandler(this.button1_Click_2);
+            // 
             // labelSettingsBlue
             // 
             this.labelSettingsBlue.AutoSize = true;
             this.labelSettingsBlue.Location = new System.Drawing.Point(7, 92);
             this.labelSettingsBlue.Name = "labelSettingsBlue";
-            this.labelSettingsBlue.Size = new System.Drawing.Size(28, 13);
+            this.labelSettingsBlue.Size = new System.Drawing.Size(31, 13);
             this.labelSettingsBlue.TabIndex = 8;
-            this.labelSettingsBlue.Text = "Blue";
+            this.labelSettingsBlue.Text = "Blue:";
             // 
             // labellabelSettingsGreen
             // 
             this.labellabelSettingsGreen.AutoSize = true;
             this.labellabelSettingsGreen.Location = new System.Drawing.Point(7, 67);
             this.labellabelSettingsGreen.Name = "labellabelSettingsGreen";
-            this.labellabelSettingsGreen.Size = new System.Drawing.Size(36, 13);
+            this.labellabelSettingsGreen.Size = new System.Drawing.Size(39, 13);
             this.labellabelSettingsGreen.TabIndex = 7;
-            this.labellabelSettingsGreen.Text = "Green";
+            this.labellabelSettingsGreen.Text = "Green:";
             // 
             // labelSettingsRed
             // 
             this.labelSettingsRed.AutoSize = true;
             this.labelSettingsRed.Location = new System.Drawing.Point(7, 40);
             this.labelSettingsRed.Name = "labelSettingsRed";
-            this.labelSettingsRed.Size = new System.Drawing.Size(27, 13);
+            this.labelSettingsRed.Size = new System.Drawing.Size(30, 13);
             this.labelSettingsRed.TabIndex = 6;
-            this.labelSettingsRed.Text = "Red";
+            this.labelSettingsRed.Text = "Red:";
             // 
             // numericUpDownSettingsBlue
             // 
-            this.numericUpDownSettingsBlue.DecimalPlaces = 2;
-            this.numericUpDownSettingsBlue.Location = new System.Drawing.Point(94, 86);
+            this.numericUpDownSettingsBlue.Location = new System.Drawing.Point(52, 85);
             this.numericUpDownSettingsBlue.Name = "numericUpDownSettingsBlue";
-            this.numericUpDownSettingsBlue.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsBlue.Size = new System.Drawing.Size(59, 20);
             this.numericUpDownSettingsBlue.TabIndex = 5;
+            this.numericUpDownSettingsBlue.ValueChanged += new System.EventHandler(this.numericUpDownSettingsBlue_ValueChanged);
             // 
             // numericUpDownSettingsGreen
             // 
-            this.numericUpDownSettingsGreen.DecimalPlaces = 2;
-            this.numericUpDownSettingsGreen.Location = new System.Drawing.Point(94, 60);
+            this.numericUpDownSettingsGreen.Location = new System.Drawing.Point(52, 59);
             this.numericUpDownSettingsGreen.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownSettingsGreen.Name = "numericUpDownSettingsGreen";
-            this.numericUpDownSettingsGreen.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsGreen.Size = new System.Drawing.Size(59, 20);
             this.numericUpDownSettingsGreen.TabIndex = 4;
+            this.numericUpDownSettingsGreen.ValueChanged += new System.EventHandler(this.numericUpDownSettingsGreen_ValueChanged);
             // 
             // numericUpDownSettingsRed
             // 
-            this.numericUpDownSettingsRed.DecimalPlaces = 2;
-            this.numericUpDownSettingsRed.Location = new System.Drawing.Point(94, 34);
+            this.numericUpDownSettingsRed.Location = new System.Drawing.Point(52, 33);
             this.numericUpDownSettingsRed.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownSettingsRed.Name = "numericUpDownSettingsRed";
-            this.numericUpDownSettingsRed.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSettingsRed.Size = new System.Drawing.Size(59, 20);
             this.numericUpDownSettingsRed.TabIndex = 3;
+            this.numericUpDownSettingsRed.ValueChanged += new System.EventHandler(this.numericUpDownSettingsRed_ValueChanged);
+#if DEBUG
             // 
             // buttonAddDummy
             // 
@@ -232,6 +247,7 @@
             this.buttonAddDummy.Text = "buttonAddDummy";
             this.buttonAddDummy.UseVisualStyleBackColor = true;
             this.buttonAddDummy.Click += new System.EventHandler(this.buttonAddDummy_Click_1);
+#endif
             // 
             // buttonSettingsNameSave
             // 
@@ -810,16 +826,6 @@
             this.tabControlDevice.Size = new System.Drawing.Size(272, 263);
             this.tabControlDevice.TabIndex = 21;
             // 
-            // buttonSettingSwitch
-            // 
-            this.buttonSettingSwitch.Location = new System.Drawing.Point(10, 109);
-            this.buttonSettingSwitch.Name = "buttonSettingSwitch";
-            this.buttonSettingSwitch.Size = new System.Drawing.Size(113, 23);
-            this.buttonSettingSwitch.TabIndex = 9;
-            this.buttonSettingSwitch.Text = "Additive Active";
-            this.buttonSettingSwitch.UseVisualStyleBackColor = true;
-            this.buttonSettingSwitch.Click += new System.EventHandler(this.button1_Click_2);
-            // 
             // Mainview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -870,7 +876,7 @@
 
         }
 
-        #endregion
+#endregion
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.CheckedListBox checkedListBoxDevices;
         private System.Windows.Forms.Button buttonRefreshList;
@@ -922,7 +928,9 @@
         private System.Windows.Forms.CheckBox checkBoxMouseTracking;
         private System.Windows.Forms.Label labelAdvancedCoordinates;
         private System.Windows.Forms.Label labelColorMouse;
+#if DEBUG
         private System.Windows.Forms.Button buttonAddDummy;
+#endif
         private System.Windows.Forms.Label labelSettingsBlue;
         private System.Windows.Forms.Label labellabelSettingsGreen;
         private System.Windows.Forms.Label labelSettingsRed;
