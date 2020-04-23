@@ -181,13 +181,13 @@ namespace WifiLedController {
         protected virtual byte[] SendPackage(byte[] package, int expectedReplyLength) {
             request++;
             //If not connected, make a connection. Might need proper error handling
-            Debug.WriteLine("Sender timeout: {0},{1}",Sender.ReceiveTimeout,Sender.SendTimeout);
+            //Debug.WriteLine("Sender timeout: {0},{1}",Sender.ReceiveTimeout,Sender.SendTimeout);
             byte[] reply = null;
             NetworkStream strem = null;
 
             for (int attempts = 0; attempts < 5; attempts++) {
                 //Check if we are still connected or if more than 4 minutes have passed (might need tuning)
-                Debug.WriteLine("[SendPackage]Last network activity was {0} seconds ago.", DateTime.Now.Subtract(lastNetworkActivity).TotalSeconds);
+                //Debug.WriteLine("[SendPackage]Last network activity was {0} seconds ago.", DateTime.Now.Subtract(lastNetworkActivity).TotalSeconds);
                 if (!Sender.Connected || DateTime.Now.Subtract(lastNetworkActivity) > TimeSpan.FromMinutes(4)) {
                     try {
                         //If are not connected any more. just reconnecting may not be the answer.
@@ -238,7 +238,7 @@ namespace WifiLedController {
                 strem.Read(reply, 0, Sender.Available);
                 Debug.WriteLine("[sendPackage] Unhandled data is: " + Encoding.ASCII.GetString(reply));
             }
-            Debug.WriteLine("[SendPackage] sending package {0} complete.", request);
+            //Debug.WriteLine("[SendPackage] sending package {0} complete.", request);
             lastNetworkActivity = DateTime.Now;
             return reply;
         }

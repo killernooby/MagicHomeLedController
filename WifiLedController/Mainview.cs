@@ -54,13 +54,29 @@ namespace WifiLedController {
         }
 
         private void SetupAmbianceSettings() {
-            (int X, int Xwidth, int Xstride, int Y, int Yheight, int Ystride) = xmlSettings.ReadAmbianceSettings();
+            (int X, int Xwidth, int Xstride, int Y, int Yheight, int Ystride, float updateRate, bool limitActive, bool limitRateSwitch) = xmlSettings.ReadAmbianceSettings();
             numericUpDownAdvancedX.Value = X;
             numericUpDownAdvancedXwidth.Value = Xwidth;
             numericUpDownAdvancedXstride.Value = Xstride;
             numericUpDownAdvancedY.Value = Y;
             numericUpDownAdvancedYheight.Value = Yheight;
             numericUpDownAdvancedYstride.Value = Ystride;
+            numericUpDownAdvancedUpdateNumber.Value = (decimal)updateRate;
+            if (limitActive) {
+                checkBoxAdvancedLimiterActive.Checked = true;
+                LimiterActive = true;
+            } else {
+                checkBoxAdvancedLimiterActive.Checked = false;
+                LimiterActive = false;
+            }
+            if (limitRateSwitch) {
+                buttonAdvancedLimiterRateSwitch.Text = "Seconds/Update";
+                LimiterUpdateRate = true;
+            } else {
+                buttonAdvancedLimiterRateSwitch.Text = "Updates/Second";
+                LimiterUpdateRate = false;
+            }
+
         }
         /* Fills the function list with known functions. Uses custom DisplayValuePair to display nicely and store the relevant byte value.
          */
@@ -352,7 +368,8 @@ namespace WifiLedController {
             int calculations = xLines * ycolumns;
             labelAdvancedCalcAmount.Text = calculations + " calculations required.";
             xmlSettings.AddAmbianceSettings((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedXstride.Value,
-                (int)numericUpDownAdvancedY.Value, (int)numericUpDownAdvancedYheight.Value, (int)numericUpDownAdvancedYstride.Value);
+                (int)numericUpDownAdvancedY.Value, (int)numericUpDownAdvancedYheight.Value, (int)numericUpDownAdvancedYstride.Value,
+                (float)numericUpDownAdvancedUpdateNumber.Value,LimiterActive,LimiterUpdateRate);
         }
 
         #endregion
@@ -575,42 +592,95 @@ namespace WifiLedController {
             Brush brush = new SolidBrush(Color.Magenta);
             Color averageColor;
             Stopwatch functionTime = new Stopwatch();
-            //crun functions in the back ground
+            //Setup settings for local use to prevent crashing
+            //Live updates crash the backgroundworker pretty reliably
+            int x = (int)numericUpDownAdvancedX.Value;
+            int y = (int)numericUpDownAdvancedY.Value;
+            int xWidth = (int)numericUpDownAdvancedXwidth.Value;
+            int yHeight = (int)numericUpDownAdvancedYheight.Value;
+            int xStride = (int)numericUpDownAdvancedXstride.Value;
+            int yStride = (int)numericUpDownAdvancedYstride.Value;
+            float red = (float)numericUpDownSettingsRed.Value;
+            float green = (float)numericUpDownSettingsGreen.Value;
+            float blue = (float)numericUpDownSettingsBlue.Value;
+
+            bool limiterActive = LimiterActive;//Local copy so we do activate the limiter only one update
+            bool limiterRate = LimiterUpdateRate;
+            decimal updateRate = numericUpDownAdvancedUpdateNumber.Value;
+            if (!limiterRate) {
+                updateRate = (1.0m / numericUpDownAdvancedUpdateNumber.Value);
+            }
+            updateRate *= 1000;//Convert seconds to milliseconds
+            this.Invoke((MethodInvoker)(() => buttonAdvancedUpdateSettings.Visible = true));
+            //crunch functions in the background
             while (ambiantMode || drawRectangle || mouseTracking) {
+                //reset and Start timer so we can track time spend in loops
+                functionTime.Reset();
+                functionTime.Start();
+
+                if (WorkerUpdateSettings) {
+                    x = (int)numericUpDownAdvancedX.Value;
+                    y = (int)numericUpDownAdvancedY.Value;
+                    xWidth = (int)numericUpDownAdvancedXwidth.Value;
+                    yHeight = (int)numericUpDownAdvancedYheight.Value;
+                    xStride = (int)numericUpDownAdvancedXstride.Value;
+                    yStride = (int)numericUpDownAdvancedYstride.Value;
+                    red = (float)numericUpDownSettingsRed.Value;
+                    green = (float)numericUpDownSettingsGreen.Value;
+                    blue = (float)numericUpDownSettingsBlue.Value;
+
+                    limiterActive = LimiterActive;
+                    limiterRate = LimiterUpdateRate;
+                    updateRate = numericUpDownAdvancedUpdateNumber.Value;
+                    if (!limiterRate) {
+                        updateRate = (1.0m / numericUpDownAdvancedUpdateNumber.Value);
+                    }
+                    updateRate *= 1000;//Convert seconds to milliseconds
+                    WorkerUpdateSettings = false;
+                }
                 if (drawRectangle) {
                     gsrc.FillRectangle(brush, (float)numericUpDownAdvancedX.Value, (float)numericUpDownAdvancedY.Value, 
                         (float)numericUpDownAdvancedXwidth.Value, (float)numericUpDownAdvancedYheight.Value);
                 }
                 if (ambiantMode) {
-                    functionTime.Start();
+                    
                     //need some validation of values, especially for the settings values.
                     if (ambianceMult) {
-                        averageColor = sp.GetAverageColorSectionMulti((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value,
-                        (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedYheight.Value,
-                        (int)numericUpDownAdvancedXstride.Value, (int)numericUpDownAdvancedYstride.Value,
-                        (float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value, (float)numericUpDownSettingsBlue.Value);
+                        averageColor = sp.GetAverageColorSectionMulti(x, y, xWidth, yHeight, xStride, yStride, red, green, blue);
                     } else {
-                        averageColor = sp.GetAverageColorSection((int)numericUpDownAdvancedX.Value, (int)numericUpDownAdvancedY.Value,
-                        (int)numericUpDownAdvancedXwidth.Value, (int)numericUpDownAdvancedYheight.Value,
-                        (int)numericUpDownAdvancedXstride.Value, (int)numericUpDownAdvancedYstride.Value,
-                        (int)numericUpDownSettingsRed.Value, (int)numericUpDownSettingsGreen.Value, (int)numericUpDownSettingsBlue.Value);
+                        averageColor = sp.GetAverageColorSection(x, y, xWidth, yHeight, xStride, yStride, (int)red, (int)green, (int)blue);
                     }
                     
                    
                     
                     this.Invoke((MethodInvoker)(() => updateViewColor(averageColor.R, averageColor.G, averageColor.B, 0)));
                     this.Invoke((MethodInvoker)(() => updateActiveWifiLeds()));
-                    functionTime.Stop();
-                    //labelAdvancedCalcTime.Text = "Calculation time is " + functionTime.ElapsedMilliseconds + " ms.";
-                    this.Invoke((MethodInvoker)(() => labelAdvancedCalcTime.Text = "Calculation time is " + functionTime.ElapsedMilliseconds + " ms."));
-                    functionTime.Reset();
+                   
+                    
                 }
                 if (mouseTracking) {
                     var pointer = sp.MouseLocPosColor();
                     pictureBoxAdvanced.BackColor = pointer.Item1;
+                    
                     this.Invoke((MethodInvoker)(() => labelAdvancedCoordinates.Text = "Mouse at: X= " + pointer.Item2.X + " Y= " + pointer.Item2.Y));
                 }
+                //Stop timer and report time spend in loop
+                functionTime.Stop();
+                
+                
+                this.Invoke((MethodInvoker)(() => labelAdvancedCalcTime.Text = "Calculation time is " + functionTime.ElapsedMilliseconds + "/" + Decimal.Round(updateRate,2) + " ms."));
                 //maybe add a sleep here.
+                if (limiterActive) {
+                    decimal timeRemaining = updateRate - functionTime.ElapsedMilliseconds;
+                    //if there is time remaining we need to wait
+                    if(timeRemaining > 0) {
+                        this.Invoke((MethodInvoker)(() => labelAdvancedCalcTime.ForeColor = SystemColors.ControlText));//reset colors as they may have been changed
+                        System.Threading.Thread.Sleep((int)timeRemaining);
+                        Debug.WriteLine("[BackgroundWorker1] sleeping for " + timeRemaining + " ms.");
+                    } else {//if there is no time remaining we need some way to warn the user that the calculations cannot keep up
+                        this.Invoke((MethodInvoker)(() => labelAdvancedCalcTime.ForeColor = Color.Red));
+                    }
+                }
             }
             //properly clean up graphics.
             gsrc.Dispose();
@@ -661,7 +731,11 @@ namespace WifiLedController {
         }
 
         private void Mainview_FormClosing(object sender, FormClosingEventArgs e) {
-            Debug.WriteLine("Shutting down...");
+            Debug.WriteLine("Shutting down..." + backgroundWorker1.IsBusy);
+            ambiantMode = false;
+            drawRectangle = false;
+            mouseTracking = false;
+
             xmlSettings.Save();
         }
 
@@ -737,6 +811,29 @@ namespace WifiLedController {
                 xmlSettings.AddAmbianceColorTuningSettings((float)numericUpDownSettingsRed.Value, (float)numericUpDownSettingsGreen.Value,
                     (float)numericUpDownSettingsBlue.Value, "Additive");
             }
+        }
+        private bool LimiterActive = true;
+        private void checkBoxAdvancedLimiterActive_CheckedChanged(object sender, EventArgs e){
+            if (LimiterActive) {
+                LimiterActive = false;
+            } else {
+                LimiterActive = true;
+            }
+        }
+        private bool LimiterUpdateRate = false; //false = updates/second true = seconds/update
+        private void buttonAdvancedLimiterRateSwitch_Click(object sender, EventArgs e) {
+            if (LimiterUpdateRate) {
+                LimiterUpdateRate = false;
+                buttonAdvancedLimiterRateSwitch.Text = "Updates/Second";
+            } else {
+                LimiterUpdateRate = true;
+                buttonAdvancedLimiterRateSwitch.Text = "Seconds/Update";
+            }
+        }
+        private bool WorkerUpdateSettings = false;
+        private void buttonAdvancedUpdateSettings_Click(object sender, EventArgs e) {
+            //No matter what we just say we need to update the settings
+            WorkerUpdateSettings = true;
         }
     }
 }

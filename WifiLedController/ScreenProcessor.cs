@@ -96,11 +96,11 @@ namespace WifiLedController {
             screenPixels.Dispose();
             //Cast r to double to more accurately divide and square root. Then back to int for the final part
             double points = Math.Truncate((double)xwidth / (double)xstride) * Math.Truncate((double)yheight / (double)ystride);
-            r = Math.Min((int)Math.Sqrt((double)r / points) + red,255);
-            g = Math.Min((int)Math.Sqrt((double)g / points) + green, 255);
-            b = Math.Min((int)Math.Sqrt((double)b / points) + blue, 255);
+            r = Math.Max(Math.Min((int)Math.Sqrt((double)r / points) + red,255),0);
+            g = Math.Max(Math.Min((int)Math.Sqrt((double)g / points) + green, 255),0);
+            b = Math.Max(Math.Min((int)Math.Sqrt((double)b / points) + blue, 255),0);
 
-            //Debug.WriteLine("Average values r={0},g={1},b={2}",r,g,b);
+            Debug.WriteLine("[SP]Average values r={0},g={1},b={2}",r,g,b);
             return Color.FromArgb(r,g,b);
         }
 
@@ -110,7 +110,6 @@ namespace WifiLedController {
                 using (Graphics gsrc = Graphics.FromHwnd(IntPtr.Zero)) {
                     IntPtr hSrcDC = gsrc.GetHdc();
                     IntPtr hDC = gdest.GetHdc();
-
 
                     int retval = BitBlt(hDC, 0, 0, xwidth, yheight, hSrcDC, x, y, (int)CopyPixelOperation.SourceCopy);
                     gdest.ReleaseHdc();
@@ -125,6 +124,7 @@ namespace WifiLedController {
                     //Debug.WriteLine("{0},{1} Color = {2}", i, j, screenPixel.GetPixel(j, i));
                     //https://sighack.com/post/averaging-rgb-colors-the-right-way
                     temp = screenPixels.GetPixel(j, i);
+                    
                     r += temp.R * temp.R;
                     g += temp.G * temp.G;
                     b += temp.B * temp.B;
@@ -134,11 +134,11 @@ namespace WifiLedController {
             screenPixels.Dispose();
             //Cast r to double to more accurately divide and square root. Then back to int for the final part
             double points = Math.Truncate((double)xwidth / (double)xstride) * Math.Truncate((double)yheight / (double)ystride);
-            r = (int)Math.Min(Math.Sqrt(r / points) * red, 255);
-            g = (int)Math.Min(Math.Sqrt(g / points) * green, 255);
-            b = (int)Math.Min(Math.Sqrt(b / points) * blue, 255);
+            r = (int)Math.Max(Math.Min(Math.Sqrt(r / points) * red, 255),0);
+            g = (int)Math.Max(Math.Min(Math.Sqrt(g / points) * green, 255), 0);
+            b = (int)Math.Max(Math.Min(Math.Sqrt(b / points) * blue, 255), 0);
 
-            //Debug.WriteLine("Average values r={0},g={1},b={2}",r,g,b);
+            Debug.WriteLine("[SP][Mult]Average values r={0},g={1},b={2}",r,g,b);
             return Color.FromArgb(r, g, b);
         }
     }

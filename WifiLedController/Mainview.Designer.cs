@@ -41,13 +41,17 @@
             this.numericUpDownSettingsBlue = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSettingsGreen = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSettingsRed = new System.Windows.Forms.NumericUpDown();
-            #if DEBUG
+#if DEBUG
             this.buttonAddDummy = new System.Windows.Forms.Button();
-            #endif
+#endif
             this.buttonSettingsNameSave = new System.Windows.Forms.Button();
             this.textBoxSettingsName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonAdvancedUpdateSettings = new System.Windows.Forms.Button();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.buttonAdvancedLimiterRateSwitch = new System.Windows.Forms.Button();
+            this.numericUpDownAdvancedUpdateNumber = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxAdvancedLimiterActive = new System.Windows.Forms.CheckBox();
             this.labelAdvancedCoordinates = new System.Windows.Forms.Label();
             this.labelColorMouse = new System.Windows.Forms.Label();
             this.checkBoxMouseTracking = new System.Windows.Forms.CheckBox();
@@ -96,6 +100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSettingsRed)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBoxAdvanced.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedUpdateNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAdvanced)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedYstride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedYheight)).BeginInit();
@@ -153,9 +158,9 @@
             this.tabPage4.Controls.Add(this.numericUpDownSettingsBlue);
             this.tabPage4.Controls.Add(this.numericUpDownSettingsGreen);
             this.tabPage4.Controls.Add(this.numericUpDownSettingsRed);
-            #if DEBUG
+#if DEBUG
             this.tabPage4.Controls.Add(this.buttonAddDummy);
-            #endif
+#endif
             this.tabPage4.Controls.Add(this.buttonSettingsNameSave);
             this.tabPage4.Controls.Add(this.textBoxSettingsName);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -244,7 +249,7 @@
             this.buttonAddDummy.Name = "buttonAddDummy";
             this.buttonAddDummy.Size = new System.Drawing.Size(75, 23);
             this.buttonAddDummy.TabIndex = 2;
-            this.buttonAddDummy.Text = "buttonAddDummy";
+            this.buttonAddDummy.Text = "Debug:AddDummy";
             this.buttonAddDummy.UseVisualStyleBackColor = true;
             this.buttonAddDummy.Click += new System.EventHandler(this.buttonAddDummy_Click_1);
 #endif
@@ -268,6 +273,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.buttonAdvancedUpdateSettings);
             this.tabPage3.Controls.Add(this.groupBoxAdvanced);
             this.tabPage3.Controls.Add(this.checkBoxAmbianceMode);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -278,8 +284,22 @@
             this.tabPage3.Text = "Advanced";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // buttonAdvancedUpdateSettings
+            // 
+            this.buttonAdvancedUpdateSettings.Location = new System.Drawing.Point(136, 3);
+            this.buttonAdvancedUpdateSettings.Name = "buttonAdvancedUpdateSettings";
+            this.buttonAdvancedUpdateSettings.Size = new System.Drawing.Size(116, 23);
+            this.buttonAdvancedUpdateSettings.TabIndex = 23;
+            this.buttonAdvancedUpdateSettings.Text = "Update Settings";
+            this.buttonAdvancedUpdateSettings.UseVisualStyleBackColor = true;
+            this.buttonAdvancedUpdateSettings.Visible = false;
+            this.buttonAdvancedUpdateSettings.Click += new System.EventHandler(this.buttonAdvancedUpdateSettings_Click);
+            // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.buttonAdvancedLimiterRateSwitch);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownAdvancedUpdateNumber);
+            this.groupBoxAdvanced.Controls.Add(this.checkBoxAdvancedLimiterActive);
             this.groupBoxAdvanced.Controls.Add(this.labelAdvancedCoordinates);
             this.groupBoxAdvanced.Controls.Add(this.labelColorMouse);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxMouseTracking);
@@ -306,10 +326,50 @@
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "Color Scanning";
             // 
+            // buttonAdvancedLimiterRateSwitch
+            // 
+            this.buttonAdvancedLimiterRateSwitch.Location = new System.Drawing.Point(88, 113);
+            this.buttonAdvancedLimiterRateSwitch.Name = "buttonAdvancedLimiterRateSwitch";
+            this.buttonAdvancedLimiterRateSwitch.Size = new System.Drawing.Size(116, 23);
+            this.buttonAdvancedLimiterRateSwitch.TabIndex = 22;
+            this.buttonAdvancedLimiterRateSwitch.Text = "Updates/Second";
+            this.buttonAdvancedLimiterRateSwitch.UseVisualStyleBackColor = true;
+            this.buttonAdvancedLimiterRateSwitch.Click += new System.EventHandler(this.buttonAdvancedLimiterRateSwitch_Click);
+            // 
+            // numericUpDownAdvancedUpdateNumber
+            // 
+            this.numericUpDownAdvancedUpdateNumber.DecimalPlaces = 2;
+            this.numericUpDownAdvancedUpdateNumber.Location = new System.Drawing.Point(27, 113);
+            this.numericUpDownAdvancedUpdateNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownAdvancedUpdateNumber.Name = "numericUpDownAdvancedUpdateNumber";
+            this.numericUpDownAdvancedUpdateNumber.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDownAdvancedUpdateNumber.TabIndex = 21;
+            this.numericUpDownAdvancedUpdateNumber.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // checkBoxAdvancedLimiterActive
+            // 
+            this.checkBoxAdvancedLimiterActive.AutoSize = true;
+            this.checkBoxAdvancedLimiterActive.Checked = true;
+            this.checkBoxAdvancedLimiterActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAdvancedLimiterActive.Location = new System.Drawing.Point(6, 115);
+            this.checkBoxAdvancedLimiterActive.Name = "checkBoxAdvancedLimiterActive";
+            this.checkBoxAdvancedLimiterActive.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxAdvancedLimiterActive.TabIndex = 20;
+            this.checkBoxAdvancedLimiterActive.UseVisualStyleBackColor = true;
+            this.checkBoxAdvancedLimiterActive.CheckedChanged += new System.EventHandler(this.checkBoxAdvancedLimiterActive_CheckedChanged);
+            // 
             // labelAdvancedCoordinates
             // 
             this.labelAdvancedCoordinates.AutoSize = true;
-            this.labelAdvancedCoordinates.Location = new System.Drawing.Point(6, 132);
+            this.labelAdvancedCoordinates.Location = new System.Drawing.Point(3, 162);
             this.labelAdvancedCoordinates.Name = "labelAdvancedCoordinates";
             this.labelAdvancedCoordinates.Size = new System.Drawing.Size(142, 13);
             this.labelAdvancedCoordinates.TabIndex = 19;
@@ -318,7 +378,7 @@
             // labelColorMouse
             // 
             this.labelColorMouse.AutoSize = true;
-            this.labelColorMouse.Location = new System.Drawing.Point(54, 145);
+            this.labelColorMouse.Location = new System.Drawing.Point(51, 175);
             this.labelColorMouse.Name = "labelColorMouse";
             this.labelColorMouse.Size = new System.Drawing.Size(99, 13);
             this.labelColorMouse.TabIndex = 18;
@@ -327,7 +387,7 @@
             // checkBoxMouseTracking
             // 
             this.checkBoxMouseTracking.AutoSize = true;
-            this.checkBoxMouseTracking.Location = new System.Drawing.Point(3, 112);
+            this.checkBoxMouseTracking.Location = new System.Drawing.Point(6, 142);
             this.checkBoxMouseTracking.Name = "checkBoxMouseTracking";
             this.checkBoxMouseTracking.Size = new System.Drawing.Size(103, 17);
             this.checkBoxMouseTracking.TabIndex = 17;
@@ -348,9 +408,9 @@
             // 
             // pictureBoxAdvanced
             // 
-            this.pictureBoxAdvanced.Location = new System.Drawing.Point(154, 112);
+            this.pictureBoxAdvanced.Location = new System.Drawing.Point(154, 142);
             this.pictureBoxAdvanced.Name = "pictureBoxAdvanced";
-            this.pictureBoxAdvanced.Size = new System.Drawing.Size(94, 89);
+            this.pictureBoxAdvanced.Size = new System.Drawing.Size(94, 59);
             this.pictureBoxAdvanced.TabIndex = 2;
             this.pictureBoxAdvanced.TabStop = false;
             // 
@@ -366,6 +426,7 @@
             // labelAdvancedCalcTime
             // 
             this.labelAdvancedCalcTime.AutoSize = true;
+            this.labelAdvancedCalcTime.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelAdvancedCalcTime.Location = new System.Drawing.Point(1, 96);
             this.labelAdvancedCalcTime.Name = "labelAdvancedCalcTime";
             this.labelAdvancedCalcTime.Size = new System.Drawing.Size(162, 13);
@@ -850,6 +911,7 @@
             this.tabPage3.PerformLayout();
             this.groupBoxAdvanced.ResumeLayout(false);
             this.groupBoxAdvanced.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedUpdateNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAdvanced)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedYstride)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdvancedYheight)).EndInit();
@@ -938,6 +1000,10 @@
         private System.Windows.Forms.NumericUpDown numericUpDownSettingsGreen;
         private System.Windows.Forms.NumericUpDown numericUpDownSettingsRed;
         private System.Windows.Forms.Button buttonSettingSwitch;
+        private System.Windows.Forms.Button buttonAdvancedLimiterRateSwitch;
+        private System.Windows.Forms.NumericUpDown numericUpDownAdvancedUpdateNumber;
+        private System.Windows.Forms.CheckBox checkBoxAdvancedLimiterActive;
+        private System.Windows.Forms.Button buttonAdvancedUpdateSettings;
     }
 }
 
