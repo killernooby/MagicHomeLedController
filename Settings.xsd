@@ -21,6 +21,9 @@
       <xs:element name="Y" type="xs:int"/>
       <xs:element name="Yheight" type="xs:int"/>
       <xs:element name="Ystride" type="xs:int"/>
+      <xs:element name="LimiterTimeValue" type="xs:float"/>
+      <xs:element name="LimiterActive" type="xs:boolean"/>
+      <xs:element name="LimiterSecondsUpdate" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AmbianceColorTuningSettings" type="AmbianceColorTuningSettingsValues"/>

@@ -11,7 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartWorkingDirectory>C:\Users\jorri\source\repos\WindowsFormsApp1\WifiLedController\bin\Debug\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\Users\jorri\source\repos\MagicHomeLedController\WifiLedController\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
